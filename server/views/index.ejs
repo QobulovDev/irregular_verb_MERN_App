@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Irregular verbs</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Irregular verbs</h1>
-</body>
+    <ul id="messages"></ul>
+    <input id="input" autocomplete="off" />
+    <button id="send">Send</button>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script>
+      const socket = io("http://localhost:5000/api/game");
+      const send = document.getElementById("send");
+      const input = document.getElementById("input");
+      const messages = document.getElementById("messages");
+      send.addEventListener("click", () => {
+        if (input.value) {
+          socket.emit("message", input.value);
+          messages.innerHTML += `<li>You: ${input.value}</li>`;
+          input.value = "";
+        }
+      });
+    </script>
+  </body>
 </html>
