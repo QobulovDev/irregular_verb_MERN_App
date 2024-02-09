@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "frontend": "cd frontend && npm start",
-    "server": "cd server && npm run dev",
-    "start": "concurrently \"npm run server\" \"npm run frontend\""
+    "start": "(cd frontend && npm start) & start node server/index.js"
   },
   "keywords": [],
   "author": "",

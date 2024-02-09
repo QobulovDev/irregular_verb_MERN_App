@@ -1,4 +1,9 @@
-body {
+/* body {
   background-color: rgb(28, 26, 26);
   color: #fff;
+} */
+
+.hover-index:hover {
+  cursor: pointer;
+  z-index: 10;
 }
