@@ -94,7 +94,7 @@ export default function Room() {
                 </p>
               </div>
               <ul className="list-group d-flex flex-column p-3">
-                <li class="form-check d-flex justify-content-start p-0">
+                <li class="form-check d-flex justify-content-start p-0 ">
                   <input
                     class="form-check-input"
                     style={{margin: "20px 10px"}}
@@ -102,12 +102,12 @@ export default function Room() {
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                   />
-                  <label class="form-check-label border px-3 py-2 my-2 w-100 d-flex justify-content-between" for="flexRadioDefault1">
+                  <label class="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
                     Default radio
                     <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
-                <li class="form-check d-flex justify-content-start p-0">
+                <li class="form-check d-flex justify-content-start p-0 ">
                   <input
                     class="form-check-input"
                     style={{margin: "20px 10px"}}
@@ -115,12 +115,40 @@ export default function Room() {
                     name="flexRadioDefault"
                     id="flexRadioDefault11"
                   />
-                  <label class="form-check-label border px-3 py-2 my-2 w-100 d-flex justify-content-between" for="flexRadioDefault11">
+                  <label class="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
                     Default radio
                     <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
               </ul>
+              {/* <ul className="list-group d-flex flex-column p-3">
+                <li class="form-check d-flex justify-content-start p-0 ">
+                  <input
+                    class="form-check-input"
+                    style={{margin: "20px 10px"}}
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                  />
+                  <label class="bg-success text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
+                    Default radio
+                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                  </label>
+                </li>
+                <li class="form-check d-flex justify-content-start p-0 ">
+                  <input
+                    class="form-check-input"
+                    style={{margin: "20px 10px"}}
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault11"
+                  />
+                  <label class="bg-danger text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
+                    Default radio
+                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                  </label>
+                </li>
+              </ul> */}
               <div className="d-flex justify-content-around mt-2">
                 <div className="col-5">
                   <div className="d-flex">
@@ -133,6 +161,7 @@ export default function Room() {
                         height: "26px",
                         marginLeft: "-10px",
                       }}
+                      title="username"
                     >
                       1
                     </div>
@@ -145,6 +174,7 @@ export default function Room() {
                         height: "26px",
                         marginLeft: "-10px",
                       }}
+                      title="username"
                     >
                       2
                     </div>
@@ -157,6 +187,7 @@ export default function Room() {
                         height: "26px",
                         marginLeft: "-10px",
                       }}
+                      title="username"
                     >
                       11
                     </div>
