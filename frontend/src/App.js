@@ -9,16 +9,16 @@ const Room=lazy(()=>import('./pages/Room'))
 // const Error404 = () => <div>Error 404</div>
 
 function App() {
-  // const [user, setUser] = useState(null);
+  const [data, setData] = useState(window.localStorage.getItem("game_data"));
   return (
     <Suspense fallback={<>Loading</>}>
       <ToastContainer/>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={ user? <Room/>: <Navigate to="/regis" replace />}/>
-          <Route path="/regis" element={ !user? <Regis/>: <Navigate to="/" replace />}/> */}
-          <Route path="/" element={ <Room/>}/>
-          <Route path="/regis" element={ <Regis/>}/>
+          <Route path="/" element={ data? <Room data={data} setData={setData}/>: <Navigate to="/regis" replace />}/>
+          <Route path="/regis" element={ !data? <Regis data={data} setData={setData}/>: <Navigate to="/" replace />}/>
+          {/* <Route path="/" element={ <Room/>}/>
+          <Route path="/regis" element={ <Regis/>}/> */}
         </Routes>
       </BrowserRouter>
     </Suspense>

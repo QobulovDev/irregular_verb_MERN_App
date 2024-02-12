@@ -4,23 +4,24 @@ import imgGold from '../assets/imgs/gold.png';
 import imgSilver from '../assets/imgs/silver.png';
 import imgbronz from '../assets/imgs/bronz.png';
 
-export default function Room() {
+export default function Room(props) {
+  const { data, setData} = props;
   return (
     <>
-      <div class="modal" tabindex="-1" style={{ display: "none" }}>
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Players rating</h5>
+      {/* <div className="modal" tabindex="-1" style={{ display: "none" }}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Players rating</h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
-              <table class="table table-hover">
+            <div className="modal-body">
+              <table className="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -56,7 +57,7 @@ export default function Room() {
                   className="btn btn-primary p-1 col-2 m-1"
                   style={{ width: "40px" }}
                 >
-                  <i class="bx bx-refresh" style={{ fontSize: "25px" }}></i>
+                  <i className="bx bx-refresh" style={{ fontSize: "25px" }}></i>
                 </button>
               </div>
             </div>
@@ -73,10 +74,10 @@ export default function Room() {
                 <h2 className="text-center mt-1">Quiz</h2>
                 <button
                   type="button"
-                  class="btn btn-danger p-1 col-2 m-1"
+                  className="btn btn-danger p-1 col-2 m-1"
                   style={{ width: "40px" }}
                 >
-                  <i class="bx bx-exit"></i>
+                  <i className="bx bx-exit"></i>
                 </button>
               </div>
               <div
@@ -84,7 +85,7 @@ export default function Room() {
                 style={{ height: "15px" }}
               >
                 <div
-                  class="progress bg-primary"
+                  className="progress bg-primary"
                   style={{ width: "80%", height: "14px" }}
                 ></div>
               </div>
@@ -94,61 +95,61 @@ export default function Room() {
                 </p>
               </div>
               <ul className="list-group d-flex flex-column p-3">
-                <li class="form-check d-flex justify-content-start p-0 ">
+                <li className="form-check d-flex justify-content-start p-0 ">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     style={{margin: "20px 10px"}}
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                   />
-                  <label class="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
+                  <label className="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
                     Default radio
-                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                    <span className="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
-                <li class="form-check d-flex justify-content-start p-0 ">
+                <li className="form-check d-flex justify-content-start p-0 ">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     style={{margin: "20px 10px"}}
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault11"
                   />
-                  <label class="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
+                  <label className="form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
                     Default radio
-                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                    <span className="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
               </ul>
-              {/* <ul className="list-group d-flex flex-column p-3">
-                <li class="form-check d-flex justify-content-start p-0 ">
+              <ul className="list-group d-flex flex-column p-3 d-none">
+                <li className="form-check d-flex justify-content-start p-0 ">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     style={{margin: "20px 10px"}}
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                   />
-                  <label class="bg-success text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
+                  <label className="bg-success text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault1">
                     Default radio
-                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                    <span className="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
-                <li class="form-check d-flex justify-content-start p-0 ">
+                <li className="form-check d-flex justify-content-start p-0 ">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     style={{margin: "20px 10px"}}
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault11"
                   />
-                  <label class="bg-danger text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
+                  <label className="bg-danger text-light form-check-label border px-3 py-2 my-2 rounded w-100 d-flex justify-content-between" for="flexRadioDefault11">
                     Default radio
-                    <span class="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
+                    <span className="badge text-bg-primary" style={{height: "22px", marginTop: "2px"}}>1</span>
                   </label>
                 </li>
-              </ul> */}
+              </ul> 
               <div className="d-flex justify-content-around mt-2">
                 <div className="col-5">
                   <div className="d-flex">
@@ -201,8 +202,8 @@ export default function Room() {
           </div>
           <div className="col-1 col-md-3 col-lg-4"></div>
         </div>
-      </div>
-      {/* <BeforeStart/> */}
+      </div> */}
+      <BeforeStart data={data} setData={setData}/>
     </>
   );
 }

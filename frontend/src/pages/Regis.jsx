@@ -2,7 +2,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 // import { redirect } from "react-router-dom";
 
-export default function Regis() {
+export default function Regis(props) {
+  const {setData} = props;
+
   const [roomType, setRoomType] = useState("join"); //create | join
   const [roomConfigs, setRoomConfigs] = useState({
     username: "",
@@ -16,7 +18,22 @@ export default function Regis() {
     if(roomType === "create" && roomConfigs.roomname.length < 4){
       return toast.error("Room name is invalid");
     }
-
+    fetch(roomType === "create"? "http://localhost:5000/api/startgame/create": "http://localhost:5000/api/startgame/join", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...roomConfigs})
+    }).then(res=>{
+      res.json().then(d=>{
+        if(!d.ok && d.error) {
+          return toast.error(d.error);
+        }
+        window.localStorage.setItem("game_data", JSON.stringify(d));
+        toast.success("Room successful created");
+        setData(d);
+      })
+    }).catch(err=>{
+      console.log(err);
+    })
   };
   return (
     <>
@@ -66,6 +83,7 @@ export default function Regis() {
                   onChange={(v) =>
                     setRoomConfigs({ ...roomConfigs, username: v.target.value })
                   }
+                  name="name"
                 />
               </div>
               {roomType === "create" ? (
@@ -86,6 +104,7 @@ export default function Regis() {
                         roomname: v.target.value,
                       })
                     }
+                    name="roomname"
                   />
                 </div>
               ) : (
@@ -105,11 +124,12 @@ export default function Regis() {
                   onChange={(v) =>
                     setRoomConfigs({ ...roomConfigs, roomcode: v.target.value })
                   }
+                  name="roomcode"
                 />
               </div>
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={submitForm}
               >
                 {roomType === "create" ? "Create" : "Join"}
