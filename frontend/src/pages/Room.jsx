@@ -3,6 +3,8 @@ import BeforeStart from "./BeforeStart";
 import imgGold from '../assets/imgs/gold.png';
 import imgSilver from '../assets/imgs/silver.png';
 import imgbronz from '../assets/imgs/bronz.png';
+import { io } from "socket.io-client";
+const socket = io('http://localhost:5000/api/game');
 
 export default function Room(props) {
   const { data, setData} = props;
