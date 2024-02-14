@@ -18,24 +18,48 @@ export default function Regis(props) {
     if(roomType === "create" && roomConfigs.roomname.length < 4){
       return toast.error("Room name is invalid");
     }
-    fetch(roomType === "create"? "http://localhost:5000/api/startgame/create": "http://localhost:5000/api/startgame/join", {
+    if(roomType === "create") 
+      createGameReq()
+    else
+      joinGameReq()
+  };
+  const createGameReq = () => {
+    fetch("http://localhost:5000/api/startgame/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...roomConfigs})
-    }).then(res=>{
-      res.json().then(d=>{
-        if(!d.ok && d.error) {
-          return toast.error(d.error);
+    }).then(response=>{
+      response.json().then(res=>{
+        if(!res.ok && res.error) {
+          return toast.error(res.error);
         }
-        const {code, creater, name} = d;
-        window.localStorage.setItem("game_data", JSON.stringify({code, creater, name}));
+        window.localStorage.setItem("game_data", JSON.stringify(res));
         toast.success("Room successful created");
-        setData(d);
+        setData(res);
       })
     }).catch(err=>{
       console.log(err);
     })
-  };
+  }
+
+  const joinGameReq = () => {
+    fetch("http://localhost:5000/api/startgame/join", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({username: roomConfigs.username, roomcode: roomConfigs.roomcode})
+    }).then(response=>{
+      response.json().then(res=>{
+        if(!res.ok && res.error) {
+          return toast.error(res.error);
+        }
+        window.localStorage.setItem("game_data", JSON.stringify(res));
+        toast.success("Room successful created");
+        setData(res);
+      })
+    }).catch(err=>{
+      console.log(err);
+    })
+  }
   return (
     <>
       <div className="conatainer">

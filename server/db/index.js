@@ -32,13 +32,15 @@ class RoomManager extends Game {
     isExistRoomByUserName(username, code){
         const roomNames = this.rooms.filter(r=>r.code==code);
         const roomusers = roomNames[0].players.filter(r=>r.name==username);
+        console.log(roomusers, username);
         if(roomusers.length>0) return roomusers;
         else return false;
     }
-    isAdminByRoomcode(username, code){
+
+    isAdminByRoomcode(code, userId){
         const roomNames = this.rooms.filter(r=>r.code==code);
-        const roomusers = roomNames[0].players.filter(r=>r.name==username);
-        if(roomusers[0].status=="owner") return true;
+        const roomusers = roomNames[0].players.filter(r=>r.id==userId);
+        if(roomusers[0]?.status=="owner") return true;
         else return false;
     }
 
@@ -50,6 +52,11 @@ class RoomManager extends Game {
             return true;
         }
         else return false;
+    }
+
+    getRoomUsers(roomcode){
+        const room = this.rooms.filter(r=>r.code==roomcode);
+        return room[0].players;
     }
 
     createRooms(creater, name, code){
@@ -67,7 +74,13 @@ class RoomManager extends Game {
         }
     
         this.rooms.push(newRoom);
-        return {newRoom};
+        return {
+            roomData: {
+                roomcode: newRoom.code, 
+                roomname: newRoom.name, 
+                user: {name: creater, id: id, status: "owner"}
+            }
+        };
     }
     
     joinRoom(code, name){
@@ -79,7 +92,13 @@ class RoomManager extends Game {
         let playerIndex = this.rooms.findIndex((r)=> r.code === code)
         if(this.rooms[playerIndex].roomState) return {userError: {ok: false, error: "This room games already started"}};
         this.rooms[playerIndex].players.push({name: name, id: id, status: "player"})
-        return  {users: this.rooms[playerIndex].players, userId: id};
+        return  { 
+            users: this.rooms[playerIndex].players, 
+            roomData: {
+                roomcode: this.rooms[playerIndex].code, 
+                roomname: this.rooms[playerIndex].name, 
+                user: {name: name, id: id, status: "player"}
+            }};
     }
 
     startGame(code, creator){
