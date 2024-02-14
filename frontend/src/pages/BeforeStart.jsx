@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function BeforeStart(props) {
-  const { data, setData} = props;
+export default function BeforeStart({ data, setData}) {
+  const [users, setUsers] = useState([])
+  useEffect(()=>{ 
+    setUsers([{...data.creater, status: "owner"}])
+  }, [])
+  console.log(data);
   return (
     <div className="conatainer">
       <div className="row">
@@ -29,25 +33,30 @@ export default function BeforeStart(props) {
                   </tr>
                 </thead>
                 <tbody style={{maxHeight: "10vh", overflow: 'scroll'}}>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td><span className="badge text-bg-primary fs-6">Creater</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Devid</td>
-                    <td><span className="badge text-bg-secondary fs-6">player</span></td>
-                  </tr>
+                  {
+                    users.map((user, index) => (
+                      <tr key={index}>
+                        <th scope="row">{index+1}</th>
+                        <td>{user.name}</td>
+                        {
+                          user.status==="owner"? 
+                          <td><span className="badge text-bg-primary fs-6">creater</span></td>:
+                          <td><span className="badge text-bg-secondary fs-6">player</span></td>
+                        }
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </table>
             </div>
             <div className="row mt-1">
                 <div className="col">
-                    <b>Join code:</b> <div className="badge text-bg-primary fs-6">21351</div>
-                </div>
-                <div className="col">
-                    <b>Invitation link: </b> <button className="btn btn-primary" style={{padding: '4px 7px'}}><i className='bx bx-copy' ></i></button>
+                    <b>Join code:</b> <div className="badge text-bg-primary fs-6">{data.code}</div>
+                    <button 
+                      className="btn btn-primary" 
+                      style={{padding: '1px 7px', marginTop: -4, marginLeft: 5}}
+                      onClick={()=>navigator.clipboard.writeText(data.code)}
+                    ><i className='bx bx-copy' ></i></button>
                 </div>
             </div>
             <button

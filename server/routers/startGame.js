@@ -9,7 +9,6 @@ route.post("/create", (req, res) => {
     const {roomcode, roomname, username} = req.body;
     const {userError, newRoom} = roomManager.createRooms(username, roomname, roomcode);
     if(userError) return res.status(400).json(userError)
-    // let gameId = req.app.io.emit("gameCreated", req.body);
     res.status(201).json(newRoom);
   } catch (error) {
     console.log(error);
@@ -19,12 +18,13 @@ route.post("/create", (req, res) => {
 
 route.get("/join", (req, res) => {
   try {
-    const {error} = createVaidator(req.body);
+    const {error} = joinGameValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const {roomcode, username} = req.body;
-    const joinRoom = roomManager.joinRoom(roomcode, username);
-    res.status(201).json(joinRoom);
+    const {userId} = roomManager.joinRoom(roomcode, username);
+    res.status(201).json(userId);
   } catch (error) {
+    console.log(err);
     return res.send(500).json({ error: "Something went wrong", ok: "false" });
   }
 });

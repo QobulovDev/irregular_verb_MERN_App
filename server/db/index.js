@@ -1,10 +1,11 @@
+const { v4: uuidv4 } = require('uuid');
 class Game {
     constructor(){
         this.games = []
     }
 
     generateId(){
-        return Math.random().toString(16).slice(2)+Date.now().toString().slice(8)
+        return uuidv4();
     }
 }
 
@@ -15,15 +16,15 @@ class RoomManager extends Game {
     }
 
     isExistRoomByCode(code){
-        if(this.rooms.length===0) return false;
+        if(this.rooms.length==0) return false;
         const roomCodes = this.rooms.filter(room=> room.code==code)
-        if(roomCodes.length==1)
+        if(roomCodes.length>0)
             return true;
         else return false;
     }
 
     isExistRoomByName(name){
-        if(this.rooms.length===0) return false;
+        if(this.rooms.length==0) return false;
         const roomNames = this.rooms.filter(r=>r.name==name);
         if(roomNames.length>0) return true;
         else return false;
@@ -31,7 +32,13 @@ class RoomManager extends Game {
     isExistRoomByUserName(username, code){
         const roomNames = this.rooms.filter(r=>r.code==code);
         const roomusers = roomNames[0].players.filter(r=>r.name==username);
-        if(roomusers.length>0) return roomNames;
+        if(roomusers.length>0) return roomusers;
+        else return false;
+    }
+    isAdminByRoomcode(username, code){
+        const roomNames = this.rooms.filter(r=>r.code==code);
+        const roomusers = roomNames[0].players.filter(r=>r.name==username);
+        if(roomusers[0].status=="owner") return true;
         else return false;
     }
 
@@ -55,6 +62,7 @@ class RoomManager extends Game {
             messages: [],
             name: name,
             code: code,
+            roomState: false,
             players: [{name: creater, id: id, status: "owner"}]
         }
     
@@ -63,24 +71,26 @@ class RoomManager extends Game {
     }
     
     joinRoom(code, name){
-        if(this.games.length==0)  throw new Error("There is no available game.");
-        if(!this.isExistRoomByCode(code)) throw new Error('No such room');
-        if(this.isExistRoomByUserName(name)) throw new Error('The username already exists.');
+        if(this.rooms.length==0)  return {userError: {ok: false, error: "There is no available game."}};
+        if(!this.isExistRoomByCode(code)) return {userError: {ok: false, error: "No such room"}};
+        if(this.isExistRoomByUserName(name, code)) return {userError: {ok: false, error: "The username already exists."}};
 
         const id = this.generateId()
         let playerIndex = this.rooms.findIndex((r)=> r.code === code)
+        if(this.rooms[playerIndex].roomState) return {userError: {ok: false, error: "This room games already started"}};
         this.rooms[playerIndex].players.push({name: name, id: id, status: "player"})
-        return id;
+        return  {users: this.rooms[playerIndex].players, userId: id};
     }
 
-    // startGame(code){
-    //     for(let room of this.rooms){
-    //         if(room.code == code || room.name == name){
-    //             throw new Error("room code or roome name is invalid")
-    //         }
-    //     }
-    //     this.games.push()
-    // }
+    startGame(code, creator){
+        if(this.rooms.length==0)  return {userError: {ok: false, error: "There is no available game."}};
+        if(!this.isExistRoomByCode(code)) return {userError: {ok: false, error: "No such room"}};
+        if(this.isExistRoomByUserName(creator, code)[0].status !=="owner") return {userError: {ok: false, error: "Only the owner can start a game."}};
+        let roomIndex = this.rooms.findIndex((r)=> r.code === code)
+        if (this.rooms[roomIndex].roomState) return {userError: {ok: false, error:"This room game already started"}};
+        this.rooms[roomIndex].roomState = true 
+        return true;
+    }
 }
 
 const roomManager = new RoomManager();

@@ -27,7 +27,8 @@ export default function Regis(props) {
         if(!d.ok && d.error) {
           return toast.error(d.error);
         }
-        window.localStorage.setItem("game_data", JSON.stringify(d));
+        const {code, creater, name} = d;
+        window.localStorage.setItem("game_data", JSON.stringify({code, creater, name}));
         toast.success("Room successful created");
         setData(d);
       })
